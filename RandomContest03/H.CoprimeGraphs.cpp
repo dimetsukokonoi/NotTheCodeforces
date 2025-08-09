@@ -22,21 +22,24 @@ bool isPrime(int n) {
 }
 
 void solve() {
-    int n, m;
-    cin >> n >> m;
-    vector<int> u(m), v(m);
-    vector<int> in(n + 1, 0), out(n + 1, 0);
-
-    for (int i = 0; i < m; i++) cin >> u[i];
-    for (int i = 0; i < m; i++) cin >> v[i];
-    for (int i = 0; i < m; i++) {
-        out[u[i]]++;
-        in[v[i]]++;
-    }
+    int n,m; cin>>n>>m;
+    vector<vector<int>> arr(n + 1);
     for (int i = 1; i <= n; i++) {
-        cout << in[i] - out[i] << " ";
+        for (int j = 1; j <= n; j++) {
+            if (i!= j && gcd(i, j) == 1) {
+                arr[i].pb(j);
+            }
+        }
+        sort(all(arr[i]));
     }
-    cout <<nl;
+    while (m--) {
+        int k,l; cin>>k>>l;
+        if (l > (int)arr[k].size()) {
+            cout<<-1<<nl;
+        } else {
+            cout<<arr[k][l - 1]<<nl;
+        }
+    }
 }
 
 int32_t main() {

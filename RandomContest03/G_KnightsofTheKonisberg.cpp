@@ -22,21 +22,30 @@ bool isPrime(int n) {
 }
 
 void solve() {
-    int n, m;
-    cin >> n >> m;
-    vector<int> u(m), v(m);
-    vector<int> in(n + 1, 0), out(n + 1, 0);
+    int n,m,k; cin>>n>>m>>k;
+    vector<vector<bool>> f(n + 1, vector<bool>(m + 1, false));
+    vector<pair<int, int>> kngt(k);
 
-    for (int i = 0; i < m; i++) cin >> u[i];
-    for (int i = 0; i < m; i++) cin >> v[i];
-    for (int i = 0; i < m; i++) {
-        out[u[i]]++;
-        in[v[i]]++;
+    for (int i = 0; i < k; i++) {
+        cin >> kngt[i].first >> kngt[i].second;
+        f[kngt[i].first][kngt[i].second] = true;
     }
-    for (int i = 1; i <= n; i++) {
-        cout << in[i] - out[i] << " ";
+    int dx[] = {-2, -2, -1, -1, 1, 1, 2, 2};
+    int dy[] = {-1,  1, -2,  2, -2, 2, -1, 1};
+    for (auto a : kngt) {
+        int x = a.first, y = a.second;
+        for (int i = 0; i < 8; i++) {
+            int currX = x + dx[i];
+            int currY = y + dy[i];
+            if (currX >= 1 && currX <= n && currY >= 1 && currY <= m) {
+                if (f[currX][currY]){
+                    yes;
+                    return;
+                }
+            }
+        }
     }
-    cout <<nl;
+    no;
 }
 
 int32_t main() {
